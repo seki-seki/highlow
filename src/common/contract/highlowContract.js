@@ -6,8 +6,15 @@ class HighlowContract {
     this.web3 = web3;
   }
 
-  async bet(gameIndex, side, priceEther) {
-    //TODO
+  async bet(gameIndex, side, price, onTransactionHash, onError) {
+    console.log("bet start");
+    const priceWei = process.env.REACT_APP_ENV === "development" ? price : price + "0".repeat(18); // price * 10 ** 18
+    const myAddress = (await this.web3.eth.getAccounts())[0];
+    const gasPrice = await this.web3.eth.getGasPrice();
+    console.log("gas price:", gasPrice);
+    const gasLimit = this.contract.methods.bet(gameIndex, side).estimateGas({from: myAddress, value: priceWei});
+    console.log("gas limit: ",gasLimit);
+    return this.contract.methods.bet(gameIndex, side).send({from: myAddress, value: priceWei}).on("transactionHash",onTransactionHash).on("error",onError)
   }
 
   async newestGameIndex() {

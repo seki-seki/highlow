@@ -82,6 +82,16 @@ export default [
         "internalType": "uint256",
         "name": "gameIndex",
         "type": "uint256"
+      },
+      {
+        "internalType": "enum highOrLow.Side",
+        "name": "side",
+        "type": "uint8"
+      },
+      {
+        "internalType": "enum highOrLow.Result",
+        "name": "result",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",
@@ -269,6 +279,16 @@ export default [
             "internalType": "uint256",
             "name": "gameIndex",
             "type": "uint256"
+          },
+          {
+            "internalType": "enum highOrLow.Side",
+            "name": "side",
+            "type": "uint8"
+          },
+          {
+            "internalType": "enum highOrLow.Result",
+            "name": "result",
+            "type": "uint8"
           }
         ],
         "internalType": "struct highOrLow.Bet[]",
@@ -329,6 +349,16 @@ export default [
             "internalType": "uint256",
             "name": "gameIndex",
             "type": "uint256"
+          },
+          {
+            "internalType": "enum highOrLow.Side",
+            "name": "side",
+            "type": "uint8"
+          },
+          {
+            "internalType": "enum highOrLow.Result",
+            "name": "result",
+            "type": "uint8"
           }
         ],
         "internalType": "struct highOrLow.Bet[]",
@@ -427,6 +457,16 @@ export default [
             "internalType": "uint256",
             "name": "gameIndex",
             "type": "uint256"
+          },
+          {
+            "internalType": "enum highOrLow.Side",
+            "name": "side",
+            "type": "uint8"
+          },
+          {
+            "internalType": "enum highOrLow.Result",
+            "name": "result",
+            "type": "uint8"
           }
         ],
         "internalType": "struct highOrLow.Bet[]",
@@ -500,6 +540,16 @@ export default [
             "internalType": "uint256",
             "name": "gameIndex",
             "type": "uint256"
+          },
+          {
+            "internalType": "enum highOrLow.Side",
+            "name": "side",
+            "type": "uint8"
+          },
+          {
+            "internalType": "enum highOrLow.Result",
+            "name": "result",
+            "type": "uint8"
           }
         ],
         "internalType": "struct highOrLow.Bet[]",
