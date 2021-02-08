@@ -1,11 +1,12 @@
 import {HighlowContainer} from "../../../common/container/highlowContainer";
 import styled from 'styled-components';
 import {ellipsisAddress} from "../../../common/helper/addressHelper";
+import Web3 from "web3";
 
 const Ratio = () => {
   const {highBets, lowBets, highPercentage, lowPercentage} = HighlowContainer.useContainer();
   const allBets = [...highBets.map((bet)=> ({...bet, side: "UP"})), ...lowBets.map((bet)=> ({...bet, side: "DOWN"}))].sort((a, b) => {
-    return a.timestamp - b.timestamp
+    return Number.parseInt(b.timestamp) - Number.parseInt(a.timestamp)
   });
   const totalBet = allBets.reduce((acc, cur) => acc + Number.parseInt(cur.amount), 0);
   return <Card>
@@ -26,7 +27,7 @@ const Ratio = () => {
           allBets.map((bet, i) => {
             return (<TableColumn key={i}>
               <TableCell>{ellipsisAddress(bet.user)}</TableCell>
-              <TableCell>{Number.parseInt(bet.amount)}{process.env.REACT_APP_CURRENCY_SYMBOL}</TableCell>
+              <TableCell>{Web3.utils.fromWei(bet.amount)}{process.env.REACT_APP_CURRENCY_SYMBOL}</TableCell>
               <TableCell>{bet.side}</TableCell>
             </TableColumn>)
           })
@@ -39,7 +40,6 @@ const Ratio = () => {
 const Card = styled.div`
   margin-left: 5%;
   height: 50vh;
-  overflow-y: scroll;
   width: 30%;
 `;
 

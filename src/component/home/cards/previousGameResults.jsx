@@ -9,12 +9,14 @@ const PreviousGameResults = () => {
     <h2>Previous Game Results</h2>
     <Table>
       <TableHeader>
+        <TableCell>INDEX</TableCell>
         <TableCell>TIME</TableCell>
         <TableCell>PRICE({game.pairName})</TableCell>
         <TableCell>RESULT</TableCell>
       </TableHeader>
       {previousGames?.map((game,i) => (
         <TableColumn key={i}>
+          <TableCell>{game.gameIndex}</TableCell>
           <TableCell>{dateFormat(new Date(Number.parseInt(game.resultTimestamp)),"mm/dd HH:MM:ss")}</TableCell>
           <TableCell>{makeDotByDecimal(game.currentPrice, game.decimal)} -> {makeDotByDecimal(game.resultPrice, game.decimal)}</TableCell>
           <TableCell>{game.winner === "0" ? "UP" : "DOWN"}</TableCell>
@@ -28,7 +30,6 @@ const PreviousGameResults = () => {
 const Card = styled.div`
 margin-left: 5%;
 height: 25vh;
-overflow-y: scroll;
 `;
 
 const Table = styled.div`
@@ -36,7 +37,7 @@ const Table = styled.div`
 `;
 
 const TableCell = styled.div`
-  width: 30%;
+  width: 25%;
 `;
 const TableHeader = styled.div`
   display: flex;

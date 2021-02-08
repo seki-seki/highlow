@@ -8,6 +8,6 @@ const useWeb3 = () => {
     setWeb3(web3);
     setErrorMessage(void 0);
   },[setWeb3]);
-  return {web3, updateWeb3, errorMessage};
+  return {web3, updateWeb3, errorMessage, setErrorMessage};
 };
 export const Web3Container = createContainer(useWeb3);

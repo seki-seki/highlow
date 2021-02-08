@@ -30,11 +30,11 @@ const Bet = () => {
   }, []);
 
   const handleSubmit = useCallback(() => {
-    if (amount < 10) {
-      setErrors([...errors, `*Please enter price greater than 10 ${process.env.REACT_APP_CURRENCY_SYMBOL}`]);
+    if (amount < 1) {
+      setErrors([...errors, `*Please enter price greater than 1 ${process.env.REACT_APP_CURRENCY_SYMBOL}`]);
       return;
     } else {
-      setErrors(errors.filter(e => e !== `*Please enter price greater than 10 ${process.env.REACT_APP_CURRENCY_SYMBOL}`));
+      setErrors(errors.filter(e => e !== `*Please enter price greater than 1 ${process.env.REACT_APP_CURRENCY_SYMBOL}`));
     }
     bet(newestGameIndex, side, amount,
       (transactionHash) => {
@@ -42,6 +42,7 @@ const Bet = () => {
         setBetting(true);
         setTransactionHash(transactionHash);
       }, (error) => {
+        console.error(error)
         setBetting(false);
         setErrors([...errors, error.message])
       })
@@ -53,6 +54,7 @@ const Bet = () => {
   }, [amount, side, errors]);
   return <Card>
     <h2>{"opening bet".toUpperCase()}</h2>
+    <p>Game Index: {newestGameIndex}</p>
     <p>Start Price</p>
     <p>{makeDotByDecimal(game.currentPrice, game.decimal)}</p>
     <p>{game.pairName}</p>
@@ -62,9 +64,10 @@ const Bet = () => {
       <DownButton selected={side === 1} onClick={handlePushDown}>DOWN</DownButton>
     </Buttons>
     <input type="text" value={amount} onChange={handleChangeAmount}/>{process.env.REACT_APP_CURRENCY_SYMBOL}
-    {errors?.length > 0 && errors.map((error,i) => (<Error key={i}>{error}</Error>))}
+    {errors?.length > 0 && errors.map((error, i) => (<Error key={i}>{error}</Error>))}
     <br/>
-    <button onClick={handleSubmit}>BET</button><br/>
+    <button onClick={handleSubmit}>BET</button>
+    <br/>
     {betting && `betting...
     transactionHash: 
     ${transactionHash}`}
@@ -75,7 +78,6 @@ const Bet = () => {
 const Card = styled.div`
   margin-left: 5%;
   height: 50vh;
-  overflow-y: scroll;
   width: 30%;
 `;
 

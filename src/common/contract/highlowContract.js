@@ -10,11 +10,10 @@ class HighlowContract {
     console.log("bet start");
     const priceWei = process.env.REACT_APP_ENV === "development" ? price : price + "0".repeat(18); // price * 10 ** 18
     const myAddress = (await this.web3.eth.getAccounts())[0];
-    const gasPrice = await this.web3.eth.getGasPrice();
-    console.log("gas price:", gasPrice);
-    const gasLimit = this.contract.methods.bet(gameIndex, side).estimateGas({from: myAddress, value: priceWei});
-    console.log("gas limit: ",gasLimit);
-    return this.contract.methods.bet(gameIndex, side).send({from: myAddress, value: priceWei}).on("transactionHash",onTransactionHash).on("error",onError)
+    return this.contract.methods.bet(gameIndex, side).send({
+      from: myAddress,
+      value: priceWei,
+    }).on("transactionHash", onTransactionHash).on("error", onError)
   }
 
   async newestGameIndex() {
@@ -26,39 +25,39 @@ class HighlowContract {
   }
 
   async games(gameIndex) {
-    return await this.contract.methods.games(gameIndex).call()
+    return {...(await this.contract.methods.games(gameIndex).call()), gameIndex}
   }
 
   async getHighBets(gameIndex) {
-    return  await this.contract.methods.getHighBets(gameIndex).call()
+    return await this.contract.methods.getHighBets(gameIndex).call()
   }
 
   async getLowBets(gameIndex) {
-    return  await this.contract.methods.getLowBets(gameIndex).call()
+    return await this.contract.methods.getLowBets(gameIndex).call()
   }
 
   async getHighAmount(gameIndex) {
-    return  await this.contract.methods.getHighAmount(gameIndex).call()
+    return await this.contract.methods.getHighAmount(gameIndex).call()
   }
 
   async getLowAmount(gameIndex) {
-    return  await this.contract.methods.getLowAmount(gameIndex).call()
+    return await this.contract.methods.getLowAmount(gameIndex).call()
   }
 
   async getHighPercentage(gameIndex) {
-    return  await this.contract.methods.getHighPercentage(gameIndex).call()
+    return await this.contract.methods.getHighPercentage(gameIndex).call()
   }
 
   async getLowPercentage(gameIndex) {
-    return  await this.contract.methods.getLowPercentage(gameIndex).call()
+    return await this.contract.methods.getLowPercentage(gameIndex).call()
   }
 
   async getHighMagnificationPercent(gameIndex) {
-    return  await this.contract.methods.getHighMagnificationPercent(gameIndex).call()
+    return await this.contract.methods.getHighMagnificationPercent(gameIndex).call()
   }
 
   async getLowMagnificationPercent(gameIndex) {
-    return  await this.contract.methods.getLowMagnificationPercent(gameIndex).call()
+    return await this.contract.methods.getLowMagnificationPercent(gameIndex).call()
   }
 
 }
