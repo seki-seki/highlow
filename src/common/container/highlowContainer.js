@@ -24,7 +24,8 @@ const useHighlow = () => {
     const getGameByIndex = highlowContract.games.bind(highlowContract);
     const getHighMagnificationPercent = highlowContract.getHighMagnificationPercent.bind(highlowContract);
     const getLowMagnificationPercent = highlowContract.getLowMagnificationPercent.bind(highlowContract);
-    const previousGames = (await Promise.all([...Array(5).keys()].map(i => newestGameIndex -2 - i >= 0 ? highlowContract.games(newestGameIndex -2 - i) : void 0))).filter(exist => exist);
+    const getNewestGameIndex = highlowContract.newestGameIndex.bind(highlowContract);
+    const previousGames = (await Promise.all([...Array(5).keys()].map(i => newestGameIndex -2 - i >= 0 ? highlowContract.games(newestGameIndex -2 - i) : void 0))).filter(game => game?.finished);
 
     setContractInformation({
       newestGameIndex,
@@ -42,6 +43,7 @@ const useHighlow = () => {
       getGameByIndex,
       getHighMagnificationPercent,
       getLowMagnificationPercent,
+      getNewestGameIndex,
       previousGames
     })
   };

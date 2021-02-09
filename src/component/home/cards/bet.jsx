@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {HighlowContainer} from "../../../common/container/highlowContainer";
 import {makeDotByDecimal} from "../../../common/helper/decimalHelper";
-import React, {useState, useCallback} from "react";
+import React, {useState, useCallback, useEffect} from "react";
 
 
 const Bet = () => {
@@ -12,6 +12,16 @@ const Bet = () => {
   const [betting, setBetting] = useState(false);
   const [transactionHash, setTransactionHash] = useState();
   const [success, setSuccess] = useState(false);
+  const [disableBet, setDisableBet] = useState(false);
+  useEffect(() => {
+    const remainTime = Number.parseInt(game.closeTimestamp) - Date.now();
+    setDisableBet(false);
+    const timeOut = setTimeout(() => {
+      setDisableBet(true)
+    }, remainTime);
+    return () => clearTimeout(timeOut);
+  },[newestGameIndex]);
+
   const handlePushUp = useCallback(() => {
     setSide(0);
   });
@@ -38,20 +48,20 @@ const Bet = () => {
     }
     bet(newestGameIndex, side, amount,
       (transactionHash) => {
-        setErrors([])
+        setErrors([]);
         setBetting(true);
         setTransactionHash(transactionHash);
       }, (error) => {
-        console.error(error)
+        console.error(error);
         setBetting(false);
-        setErrors([...errors, error.message])
+        setErrors(["An error occurred. Maybe time is over"]);
       })
       .then(() => {
         setBetting(false);
         setSuccess(true);
         update();
       })
-  }, [amount, side, errors]);
+  }, [amount, side, errors, bet, newestGameIndex]);
   return <Card>
     <h2>{"opening bet".toUpperCase()}</h2>
     <p>Game Index: {newestGameIndex}</p>
@@ -66,7 +76,7 @@ const Bet = () => {
     <input type="text" value={amount} onChange={handleChangeAmount}/>{process.env.REACT_APP_CURRENCY_SYMBOL}
     {errors?.length > 0 && errors.map((error, i) => (<Error key={i}>{error}</Error>))}
     <br/>
-    <button onClick={handleSubmit}>BET</button>
+    <button key= {newestGameIndex} onClick={handleSubmit} disabled={disableBet}>BET</button>
     <br/>
     {betting && `betting...
     transactionHash: 

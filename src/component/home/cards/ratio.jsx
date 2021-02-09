@@ -16,7 +16,7 @@ const Ratio = () => {
     {allBets.length > 0 && (<div>
       <p>UP : {highPercentage}%</p>
       <p>Down : {lowPercentage}%</p>
-      <p>totalBet {totalBet}{process.env.REACT_APP_CURRENCY_SYMBOL} bet</p>
+      <p>totalBet {Web3.utils.fromWei(String(totalBet))}{process.env.REACT_APP_CURRENCY_SYMBOL} bet</p>
       <Table>
         <TableHeader>
           <TableCell>USER</TableCell>

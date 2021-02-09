@@ -87,11 +87,6 @@ export default [
         "internalType": "enum highOrLow.Side",
         "name": "side",
         "type": "uint8"
-      },
-      {
-        "internalType": "enum highOrLow.Result",
-        "name": "result",
-        "type": "uint8"
       }
     ],
     "stateMutability": "view",
@@ -284,11 +279,6 @@ export default [
             "internalType": "enum highOrLow.Side",
             "name": "side",
             "type": "uint8"
-          },
-          {
-            "internalType": "enum highOrLow.Result",
-            "name": "result",
-            "type": "uint8"
           }
         ],
         "internalType": "struct highOrLow.Bet[]",
@@ -353,11 +343,6 @@ export default [
           {
             "internalType": "enum highOrLow.Side",
             "name": "side",
-            "type": "uint8"
-          },
-          {
-            "internalType": "enum highOrLow.Result",
-            "name": "result",
             "type": "uint8"
           }
         ],
@@ -462,11 +447,6 @@ export default [
             "internalType": "enum highOrLow.Side",
             "name": "side",
             "type": "uint8"
-          },
-          {
-            "internalType": "enum highOrLow.Result",
-            "name": "result",
-            "type": "uint8"
           }
         ],
         "internalType": "struct highOrLow.Bet[]",
@@ -544,11 +524,6 @@ export default [
           {
             "internalType": "enum highOrLow.Side",
             "name": "side",
-            "type": "uint8"
-          },
-          {
-            "internalType": "enum highOrLow.Result",
-            "name": "result",
             "type": "uint8"
           }
         ],
@@ -641,6 +616,13 @@ export default [
       }
     ],
     "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawAll",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

@@ -4,6 +4,7 @@ import dateFormat from "dateformat";
 import Countdown from "react-countdown";
 import {useState, useEffect, useMemo} from "react";
 import Web3 from "web3";
+import Side from "../../../common/constants/Side";
 
 const MyBets = () => {
   const {myBets, getGameByIndex, getHighMagnificationPercent, getLowMagnificationPercent} = HighlowContainer.useContainer();
@@ -17,8 +18,9 @@ const MyBets = () => {
         const game = await getGameByIndex(bet.gameIndex);
         const gameIsFinished = game.finished;
         const isWin = game.winner === bet.side;
+        const isNoGame = game.winner === Side.noGame;
         const rate = bet.side === "0" ? await getHighMagnificationPercent(bet.gameIndex) : await getLowMagnificationPercent(bet.gameIndex);
-        return {...bet, gameIsFinished, isWin, rate, game}
+        return {...bet, gameIsFinished, isWin, rate, game, isNoGame}
       }));
       setBetsWithResult(betsWithResult);
     };
@@ -34,27 +36,33 @@ const MyBets = () => {
         <TableCell>BET ON</TableCell>
         <TableCell>RESULT</TableCell>
       </TableHeader>
-      {betsWithResult.map((bet, i) => {
-        return (
-          <TableColumn key={i}>
-            <TableCell>{bet.game.gameIndex}</TableCell>
-            <TableCell>{dateFormat(new Date(Number.parseInt(bet.timestamp) * 1000), "mm/dd HH:MM:ss")}</TableCell>
-            <TableCell>{Web3.utils.fromWei(bet.amount)}</TableCell>
-            <TableCell>{bet.side === "0" ? "UP" : "DOWN"}</TableCell>
-            <TableCell>
-              {!bet.gameIsFinished && (
-                <div>
-                  Result in <Countdown date={Number.parseInt(bet.game.resultTimestamp)} daysInHours/>
-                </div>
-              )}
-              {bet.gameIsFinished && (bet.isWin ? `WON : ${Web3.utils.fromWei(bet.amount * bet.rate / 100)}${process.env.REACT_APP_CURRENCY_SYMBOL}` : "LOST")}
-            </TableCell>
-          </TableColumn>
-        )
-      })}
+      {betsWithResult.map((bet, i) => <Col key={i} bet={bet}/>)}
     </Table>
   </Card>
-}
+};
+
+const Col = ({bet,key}) => {
+  const [isOvertime, setIsOvertime] = useState(false);
+  return (
+    <TableColumn>
+      <TableCell>{bet.game.gameIndex}</TableCell>
+      <TableCell>{dateFormat(new Date(Number.parseInt(bet.timestamp) * 1000), "mm/dd HH:MM:ss")}</TableCell>
+      <TableCell>{Web3.utils.fromWei(bet.amount)}</TableCell>
+      <TableCell>{bet.side === Side.high ? "UP" : bet.side === Side.low ? "DOWN" : bet.side === Side.draw ? "DRAW" : "NO GAME"}</TableCell>
+      <TableCell>
+        {!bet.gameIsFinished && (isOvertime ? (<p>in Calculation...</p>) : (
+          <div>
+            Result in <Countdown key={key} date={Number.parseInt(bet.game.resultTimestamp)} daysInHours
+                                 onComplete={() => setIsOvertime(true)}/>
+          </div>
+        ))}
+        {bet.gameIsFinished && (
+          bet.isNoGame ? `NO GAME: ${Web3.utils.fromWei(String(bet.amount))}${process.env.REACT_APP_CURRENCY_SYMBOL} returns` :
+            bet.isWin ? `WON : ${Web3.utils.fromWei(String(bet.amount * bet.rate / 100))}${process.env.REACT_APP_CURRENCY_SYMBOL} got` : "LOST")}
+      </TableCell>
+    </TableColumn>
+  )
+};
 
 const Card = styled.div`
   margin-left: 5%;
