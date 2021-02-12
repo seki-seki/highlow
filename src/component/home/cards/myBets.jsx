@@ -37,7 +37,7 @@ const MyBets = () => {
         <TableCell>RESULT</TableCell>
         <TableCell>TRANSACTION</TableCell>
       </TableHeader>
-      {betsWithResult.map((bet) => <Col key={`${bet.game.gameIndex}${bet.side}${bet.amount}`} bet={bet}/>)}
+      {betsWithResult.map((bet) => <Col key={bet.timestamp} bet={bet}/>)}
     </Table>
   </Card>
 };
@@ -53,7 +53,7 @@ const Col = ({bet}) => {
       <TableCell>
         {!bet.gameIsFinished && (isOvertime ? (<p>in Calculation...</p>) : (
           <div>
-            Result in <Countdown key={`${bet.game.gameIndex}${bet.side}${bet.amount}`}
+            Result in <Countdown key={bet.timestamp}
                                  date={Number.parseInt(bet.game.resultTimestamp)} daysInHours
                                  onComplete={() => setIsOvertime(true)}/>
           </div>
