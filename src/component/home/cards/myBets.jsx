@@ -58,6 +58,7 @@ const Col = ({bet}) => {
           </div>
         ))}
         {bet.gameIsFinished && (
+          bet.side === Side.draw ? "DRAW":
           bet.isNoGame ? `NO GAME: ${Web3.utils.fromWei(String(bet.amount))}${process.env.REACT_APP_CURRENCY_SYMBOL} returns` :
             bet.isWin ? `WON : ${Web3.utils.fromWei(String(bet.amount * bet.rate / 100))}${process.env.REACT_APP_CURRENCY_SYMBOL} got` : "LOST")}
       </TableCell>

@@ -6,7 +6,6 @@ import {HighlowContainer} from "../../common/container/highlowContainer";
 import Ratio from "./cards/ratio";
 import styled from 'styled-components';
 import Bet from "./cards/bet";
-import Time from "./cards/time";
 import PreviousGameResults from "./cards/previousGameResults";
 import MyBets from "./cards/myBets";
 
@@ -28,10 +27,9 @@ const Home = () => {
     <Cards>
       <Ratio/>
       <Bet/>
-      <HalfCard>
-        <Time/>
+      <FlexCard>
         <PreviousGameResults/>
-      </HalfCard>
+      </FlexCard>
     </Cards>
     <MyBets/>
   </div>
@@ -43,7 +41,7 @@ const Cards = styled.div`
   width: 100%
 `;
 
-const HalfCard = styled.div`
+const FlexCard = styled.div`
   flex: 1;
 `;
 

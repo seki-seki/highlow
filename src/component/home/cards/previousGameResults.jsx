@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import {HighlowContainer} from "../../../common/container/highlowContainer";
 import dateFormat from "dateformat";
 import {makeDotByDecimal} from "../../../common/helper/decimalHelper";
+import Side from "../../../common/constants/Side";
 
 const PreviousGameResults = () => {
   const {previousGames,game} = HighlowContainer.useContainer();
+  console.log(previousGames)
   return <Card>
     <h2>Previous Game Results</h2>
     <Table>
@@ -18,8 +20,8 @@ const PreviousGameResults = () => {
         <TableColumn key={i}>
           <TableCell>{game.gameIndex}</TableCell>
           <TableCell>{dateFormat(new Date(Number.parseInt(game.resultTimestamp)),"mm/dd HH:MM:ss")}</TableCell>
-          <TableCell>{makeDotByDecimal(game.currentPrice, game.decimal)} -> {makeDotByDecimal(game.resultPrice, game.decimal)}</TableCell>
-          <TableCell>{game.winner === "0" ? "UP" : "DOWN"}</TableCell>
+          <TableCell>{makeDotByDecimal(game.currentPrice, game.decimal)} -> {!game.finished ? "Loading...": makeDotByDecimal(game.resultPrice, game.decimal)}</TableCell>
+          <TableCell>{!game.finished ? "Loading...": game.winner === Side.high ? "UP" : game.winner === Side.low ? "DOWN" : game.winner === Side.draw ? "DRAW" : "NO GAME"}</TableCell>
         </TableColumn>
       ))}
     </Table>

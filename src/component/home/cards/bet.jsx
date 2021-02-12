@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import {HighlowContainer} from "../../../common/container/highlowContainer";
 import {makeDotByDecimal} from "../../../common/helper/decimalHelper";
 import React, {useState, useCallback, useEffect} from "react";
+import Countdown from "react-countdown";
 
 
 const Bet = () => {
-  const {game, newestGameIndex, bet, update} = HighlowContainer.useContainer();
+  const {game, newestGameIndex, bet, update, getNewestGameIndex} = HighlowContainer.useContainer();
   const [amount, setAmount] = useState("");
   const [side, setSide] = useState(0);
   const [errors, setErrors] = useState([]);
@@ -19,8 +20,20 @@ const Bet = () => {
     const timeOut = setTimeout(() => {
       setDisableBet(true)
     }, remainTime);
-    return () => clearTimeout(timeOut);
-  },[newestGameIndex]);
+    const checkNewGame = () => {
+      getNewestGameIndex().then((newIndex) => {
+        console.log(newIndex, newestGameIndex, newIndex > newestGameIndex)
+        if (newIndex > newestGameIndex) {
+          update();
+        }
+      });
+    };
+    const interval = setInterval(checkNewGame, 1000);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeOut)
+    }
+  }, [newestGameIndex]);
 
   const handlePushUp = useCallback(() => {
     setSide(0);
@@ -76,7 +89,9 @@ const Bet = () => {
     <input type="text" value={amount} onChange={handleChangeAmount}/>{process.env.REACT_APP_CURRENCY_SYMBOL}
     {errors?.length > 0 && errors.map((error, i) => (<Error key={i}>{error}</Error>))}
     <br/>
-    <button key= {newestGameIndex} onClick={handleSubmit} disabled={disableBet}>BET</button>
+    {disableBet ? <p>Please wait for next game.</p> :
+      <div><Countdown key={game.closeTimestamp} date={Number.parseInt(game.closeTimestamp)} daysInHours/></div>}
+    <button key={newestGameIndex} onClick={handleSubmit} disabled={disableBet}>BET</button>
     <br/>
     {betting && `betting...
     transactionHash: 
