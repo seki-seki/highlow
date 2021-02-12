@@ -6,7 +6,7 @@ import Countdown from "react-countdown";
 
 
 const Bet = () => {
-  const {game, newestGameIndex, bet, update, getNewestGameIndex} = HighlowContainer.useContainer();
+  const {game, newestGameIndex, bet, update, getNewestGameIndex, updateBets} = HighlowContainer.useContainer();
   const [amount, setAmount] = useState("");
   const [side, setSide] = useState(0);
   const [errors, setErrors] = useState([]);
@@ -26,13 +26,12 @@ const Bet = () => {
         if (newIndex > newestGameIndex) {
           update();
         }
+        updateBets();
       });
     };
-    const updateGameInterval = setInterval(update, 10000);
     const interval = setInterval(checkNewGame, 1000);
     return () => {
       clearInterval(interval);
-      clearInterval(updateGameInterval);
       clearTimeout(timeOut)
     }
   }, [newestGameIndex]);

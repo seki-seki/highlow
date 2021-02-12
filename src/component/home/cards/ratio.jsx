@@ -5,7 +5,10 @@ import Web3 from "web3";
 
 const Ratio = () => {
   const {highBets, lowBets, highPercentage, lowPercentage} = HighlowContainer.useContainer();
-  const allBets = [...highBets.map((bet)=> ({...bet, side: "UP"})), ...lowBets.map((bet)=> ({...bet, side: "DOWN"}))].sort((a, b) => {
+  const allBets = [...highBets.map((bet) => ({...bet, side: "UP"})), ...lowBets.map((bet) => ({
+    ...bet,
+    side: "DOWN"
+  }))].sort((a, b) => {
     return Number.parseInt(b.timestamp) - Number.parseInt(a.timestamp)
   });
   const totalBet = allBets.reduce((acc, cur) => acc + Number.parseInt(cur.amount), 0);
