@@ -28,9 +28,11 @@ const Bet = () => {
         }
       });
     };
+    const updateGameInterval = setInterval(update, 10000);
     const interval = setInterval(checkNewGame, 1000);
     return () => {
       clearInterval(interval);
+      clearInterval(updateGameInterval);
       clearTimeout(timeOut)
     }
   }, [newestGameIndex]);
