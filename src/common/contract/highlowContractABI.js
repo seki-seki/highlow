@@ -3,6 +3,80 @@ export default [
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "gameIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum highOrLow.Side",
+        "name": "side",
+        "type": "uint8"
+      }
+    ],
+    "name": "bet",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "startTimestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "closeTimestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "resultTimestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "decimal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "currentPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "pairName",
+        "type": "string"
+      }
+    ],
+    "name": "createNewGame",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "gameIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "resultPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "finishGame",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "_feePercent",
         "type": "uint256"
       }
@@ -28,6 +102,90 @@ export default [
     ],
     "name": "OwnershipTransferred",
     "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_feePercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "setFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_newestGameIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "setNewestGameIndex",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "gameIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "transactionHash",
+        "type": "string"
+      }
+    ],
+    "name": "setTransactionHash",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -93,62 +251,6 @@ export default [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "gameIndex",
-        "type": "uint256"
-      },
-      {
-        "internalType": "enum highOrLow.Side",
-        "name": "side",
-        "type": "uint8"
-      }
-    ],
-    "name": "bet",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "startTimestamp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "closeTimestamp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "resultTimestamp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "decimal",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "currentPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "pairName",
-        "type": "string"
-      }
-    ],
-    "name": "createNewGame",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "feePercent",
     "outputs": [
@@ -159,24 +261,6 @@ export default [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "gameIndex",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "resultPrice",
-        "type": "uint256"
-      }
-    ],
-    "name": "finishGame",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -238,6 +322,11 @@ export default [
         "internalType": "uint256",
         "name": "resultPrice",
         "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "transactionHash",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -559,72 +648,6 @@ export default [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_feePercent",
-        "type": "uint256"
-      }
-    ],
-    "name": "setFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_newestGameIndex",
-        "type": "uint256"
-      }
-    ],
-    "name": "setNewestGameIndex",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawAll",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

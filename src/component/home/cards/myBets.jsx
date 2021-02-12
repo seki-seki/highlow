@@ -35,6 +35,7 @@ const MyBets = () => {
         <TableCell>BET AMOUNT</TableCell>
         <TableCell>BET ON</TableCell>
         <TableCell>RESULT</TableCell>
+        <TableCell>TRANSACTION</TableCell>
       </TableHeader>
       {betsWithResult.map((bet) => <Col key={`${bet.game.gameIndex}${bet.side}${bet.amount}`} bet={bet}/>)}
     </Table>
@@ -62,6 +63,7 @@ const Col = ({bet}) => {
           bet.isNoGame ? `NO GAME: ${Web3.utils.fromWei(String(bet.amount))}${process.env.REACT_APP_CURRENCY_SYMBOL} returns` :
             bet.isWin ? `WON : ${Web3.utils.fromWei(String(bet.amount * bet.rate / 100))}${process.env.REACT_APP_CURRENCY_SYMBOL} got` : "LOST")}
       </TableCell>
+      <TableCell><a target="brank" href={`${process.env.REACT_APP_ENV === "production" ? "https://scan.tomochain.com/txs/" : "https://scan.testnet.tomochain.com/txs/"}${bet.game.transactionHash}`}>{bet.game.transactionHash}</a></TableCell>
     </TableColumn>
   )
 };
@@ -76,7 +78,7 @@ const Table = styled.div`
 `;
 
 const TableCell = styled.div`
-  width: 25%;
+  width: 16%;
 `;
 const TableHeader = styled.div`
   display: flex;

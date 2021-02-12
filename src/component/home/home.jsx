@@ -11,7 +11,7 @@ import MyBets from "./cards/myBets";
 
 const Home = () => {
   const {web3} = Web3Container.useContainer();
-  const {newestGameIndex} = HighlowContainer.useContainer();
+  const {game} = HighlowContainer.useContainer();
   const history = useHistory(web3);
 
   useEffect(() => {
@@ -19,8 +19,8 @@ const Home = () => {
       history.push("/connect")
     }
   }, [web3]);
-  if (!web3 || !newestGameIndex) {
-    return <div/>
+  if (!web3 || !game) {
+    return <div>Loading...</div>
   }
   return <div>
     <Header/>
