@@ -82,6 +82,9 @@ contract highOrLow is Ownable {
         uint256 highAmount = getHighAmount(gameIndex);
         uint256 lowAmount = getLowAmount(gameIndex);
         uint256 totalAmount = highAmount.add(lowAmount);
+        if(totalAmount == 0) {
+            return 50;
+        }
         return highAmount.mul(100).div(totalAmount);
     }
 
@@ -89,6 +92,9 @@ contract highOrLow is Ownable {
         uint256 highAmount = getHighAmount(gameIndex);
         uint256 lowAmount = getLowAmount(gameIndex);
         uint256 totalAmount = highAmount.add(lowAmount);
+        if(totalAmount == 0) {
+            return 50;
+        }
         return lowAmount.mul(100).div(totalAmount);
     }
 
