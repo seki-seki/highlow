@@ -7,9 +7,11 @@ const useHighlow = () => {
   const {web3} = Web3Container.useContainer();
   const [contract, setContract] = useState();
   const [contractInformation, setContractInformation] = useState({});
+  const [updating, setUpdating] = useState(false);
   const update = useCallback(() => registerContractInformation(contract), [contract]);
   const updateBets = useCallback(async () => {
-    if(contract) {
+    if(contract && !updating) {
+      setUpdating(true);
       const newestGameIndex = contractInformation.newestGameIndex;
       const highAmount = await contract.getHighAmount(newestGameIndex).catch(() => undefined);
       const lowAmount = await contract.getLowAmount(newestGameIndex).catch(() => undefined);
@@ -18,9 +20,11 @@ const useHighlow = () => {
       const highBets = await contract.getHighBets(newestGameIndex).catch(() => undefined);
       const lowBets = await contract.getLowBets(newestGameIndex).catch(() => undefined);
       setContractInformation({...contractInformation, newestGameIndex, highAmount,lowAmount,highPercentage,lowPercentage, highBets, lowBets})
+      setUpdating(false);
     }
-  },[contractInformation, contract, setContractInformation]);
+  },[contractInformation, contract, setContractInformation, updating]);
   const registerContractInformation = async (highlowContract) => {
+    setUpdating(true);
     const newestGameIndex = await highlowContract.newestGameIndex().catch(() => undefined);
     const highAmount = await highlowContract.getHighAmount(newestGameIndex).catch(() => undefined);
     const lowAmount = await highlowContract.getLowAmount(newestGameIndex).catch(() => undefined);
@@ -59,6 +63,7 @@ const useHighlow = () => {
       getNewestGameIndex,
       previousGames,
     })
+    setUpdating(false);
   };
   useEffect(() => {
     if (!web3) {

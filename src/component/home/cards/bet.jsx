@@ -26,7 +26,6 @@ const Bet = () => {
         if (newIndex > newestGameIndex) {
           update();
         }
-        updateBets();
       });
     };
     const interval = setInterval(checkNewGame, 1000);
@@ -71,6 +70,7 @@ const Bet = () => {
         setErrors(["An error occurred. Maybe time is over"]);
       })
       .then(() => {
+        setErrors([]);
         setBetting(false);
         setSuccess(true);
         update();
@@ -91,7 +91,7 @@ const Bet = () => {
     {errors?.length > 0 && errors.map((error, i) => (<Error key={i}>{error}</Error>))}
     <br/>
     {disableBet ? <p>Please wait for next game.</p> :
-      <div><Countdown key={game.closeTimestamp} date={Number.parseInt(game.closeTimestamp)} daysInHours/></div>}
+      <div><Countdown key={game.closeTimestamp} date={Number.parseInt(game.closeTimestamp)} daysInHours onComplete={updateBets}/></div>}
     <button key={newestGameIndex} onClick={handleSubmit} disabled={disableBet}>BET</button>
     <br/>
     {betting && `betting...
