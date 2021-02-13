@@ -22,13 +22,13 @@ const Bet = () => {
     }, remainTime);
     const checkNewGame = () => {
       getNewestGameIndex().then((newIndex) => {
-        console.log(newIndex, newestGameIndex, newIndex > newestGameIndex)
-        if (newIndex > newestGameIndex) {
+        console.log(newIndex, newestGameIndex, Number.parseInt(newIndex) > Number.parseInt(newestGameIndex))
+        if (Number.parseInt(newIndex) > Number.parseInt(newestGameIndex)) {
           update();
         }
       });
     };
-    const interval = setInterval(checkNewGame, 1000);
+    const interval = setInterval(checkNewGame, 3000);
     return () => {
       clearInterval(interval);
       clearTimeout(timeOut)
