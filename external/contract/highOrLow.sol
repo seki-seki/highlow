@@ -5,6 +5,7 @@ import 'github.com/OpenZeppelin/zeppelin-solidity/contracts/math/SafeMath.sol';
 
 contract highOrLow is Ownable {
     using SafeMath for uint256;
+    uint256 multipler = 10 ** 18;
     struct Bet {
         address payable user;
         uint256 amount;
@@ -85,7 +86,7 @@ contract highOrLow is Ownable {
         if(totalAmount == 0) {
             return 50;
         }
-        return highAmount.mul(100).div(totalAmount);
+        return highAmount.mul(100).mul(multipler).div(totalAmount);
     }
 
     function getLowPercentage(uint256 gameIndex) public view returns (uint256){
@@ -95,15 +96,15 @@ contract highOrLow is Ownable {
         if(totalAmount == 0) {
             return 50;
         }
-        return lowAmount.mul(100).div(totalAmount);
+        return lowAmount.mul(100).mul(multipler).div(totalAmount);
     }
 
     function getHighMagnificationPercent(uint256 gameIndex) public view returns(uint256){
-        return (100 - feePercent).mul(100).div(getHighPercentage(gameIndex));
+        return (100 - feePercent).mul(100).mul(multipler).div(getHighPercentage(gameIndex));
     }
 
     function getLowMagnificationPercent(uint256 gameIndex) public view returns(uint256){
-        return (100 - feePercent).mul(100).div(getLowPercentage(gameIndex));
+        return (100 - feePercent).mul(100).mul(multipler).div(getLowPercentage(gameIndex));
     }
 
     function createNewGame(uint256 startTimestamp, uint256 closeTimestamp, uint256 resultTimestamp, uint256 decimal, uint256 currentPrice,string memory pairName) onlyOwner public {

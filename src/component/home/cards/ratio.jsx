@@ -17,8 +17,9 @@ const Ratio = () => {
     <p>Current bets</p>
     {allBets.length === 0 && (<p>No Bets are found</p>)}
     {allBets.length > 0 && (<div>
-      <p>UP : {highPercentage}%</p>
-      <p>Down : {lowPercentage}%</p>
+      {/*percentage is decimal 18, I can use #fromWei*/}
+      <p>UP : {Web3.utils.fromWei(highPercentage)}%</p>
+      <p>Down : {Web3.utils.fromWei(lowPercentage)}%</p>
       <p>totalBet {Web3.utils.fromWei(String(totalBet))}{process.env.REACT_APP_CURRENCY_SYMBOL} bet</p>
       <Table>
         <TableHeader>
