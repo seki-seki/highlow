@@ -11,7 +11,9 @@ const PreviousGameResults = () => {
   const [previousGamesWithTotalAmount, setPreviousGamesWithTotalAmount] = useState(previousGames);
   useEffect(() => {
     const setup = async () => setPreviousGamesWithTotalAmount(await Promise.all(previousGames.map(async (game) => {
-        const totalBets = Number.parseInt(await getHighAmount(game.gameIndex)) + Number.parseInt(await getLowAmount(game.gameIndex));
+      let high = Number.parseInt(await getHighAmount(game.gameIndex));
+      let low = Number.parseInt(await getLowAmount(game.gameIndex));
+      const totalBets = high + low;
         return {...game, totalBets}
     })));
     setup();
@@ -37,7 +39,7 @@ const PreviousGameResults = () => {
         return (
           <TableColumn key={i}>
             <TableCell>{game.gameIndex}</TableCell>
-            <TableCell>{Web3.utils.fromWei(String(game.totalBets))}</TableCell>
+            <TableCell>{game.totalBets && Web3.utils.fromWei(String(game.totalBets))}</TableCell>
             <TableCell>{dateFormat(new Date(Number.parseInt(game.resultTimestamp)), "mm/dd HH:MM:ss")}</TableCell>
             <TableCell>{makeDotByDecimal(game.currentPrice, game.decimal)} -> {!game.finished ? "Loading..." : makeDotByDecimal(game.resultPrice, game.decimal)}</TableCell>
             <TableCell>{!game.finished ? "Loading..." : game.winner === Side.high ? "UP" : game.winner === Side.low ? "DOWN" : game.winner === Side.draw ? "DRAW" : "NO GAME"}</TableCell>
