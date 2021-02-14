@@ -19,7 +19,7 @@ const useHighlow = () => {
       const lowPercentage = await contract.getLowPercentage(newestGameIndex).catch(() => undefined);
       const highBets = await contract.getHighBets(newestGameIndex).catch(() => undefined);
       const lowBets = await contract.getLowBets(newestGameIndex).catch(() => undefined);
-      setContractInformation({...contractInformation, newestGameIndex, highAmount,lowAmount,highPercentage,lowPercentage, highBets, lowBets})
+      setContractInformation({...contractInformation, newestGameIndex, highAmount,lowAmount,highPercentage,lowPercentage, highBets, lowBets});
       setUpdating(false);
     }
   },[contractInformation, contract, setContractInformation, updating]);
@@ -38,11 +38,13 @@ const useHighlow = () => {
     const myBets = await highlowContract.getMyBets().catch(() => undefined);
     const bet = highlowContract.bet.bind(highlowContract);
     const getGameByIndex = highlowContract.games.bind(highlowContract);
+    const getHighAmount = highlowContract.getHighAmount.bind(highlowContract);
+    const getLowAmount = highlowContract.getLowAmount.bind(highlowContract);
     const getHighMagnificationPercent = highlowContract.getHighMagnificationPercent.bind(highlowContract);
     const getLowMagnificationPercent = highlowContract.getLowMagnificationPercent.bind(highlowContract);
     const getNewestGameIndex = highlowContract.newestGameIndex.bind(highlowContract);
     const previousGames = (await Promise.all([...Array(10).keys()]
-      .map(i => newestGameIndex - 1 - i >= 0 ? highlowContract.games(newestGameIndex - 1 - i) : void 0))).filter(exist => exist)
+      .map(i => newestGameIndex - 1 - i >= 0 ? highlowContract.games(newestGameIndex - 1 - i) : void 0))).filter(exist => exist);
 
     setContractInformation({
       newestGameIndex,
@@ -58,11 +60,13 @@ const useHighlow = () => {
       myBets,
       bet,
       getGameByIndex,
+      getHighAmount,
+      getLowAmount,
       getHighMagnificationPercent,
       getLowMagnificationPercent,
       getNewestGameIndex,
       previousGames,
-    })
+    });
     setUpdating(false);
   };
   useEffect(() => {

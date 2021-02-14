@@ -22,7 +22,6 @@ const Bet = () => {
     }, remainTime);
     const checkNewGame = () => {
       getNewestGameIndex().then((newIndex) => {
-        console.log(newIndex, newestGameIndex, Number.parseInt(newIndex) > Number.parseInt(newestGameIndex))
         if (Number.parseInt(newIndex) > Number.parseInt(newestGameIndex)) {
           update();
         }
